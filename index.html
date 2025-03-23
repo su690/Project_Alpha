@@ -147,38 +147,38 @@
     
  
     <!--center item-->
-   <body class="bg-gray-100 flex justify-center items-center h-screen">
+  <body class="bg-gray-100 flex justify-center items-center h-screen">
     <div class="relative w-full p-6">
         <!-- Previous Button -->
         <button id="prevBtn" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-300 p-3 rounded-full shadow-md z-10">❮</button>
 
         <!-- Scroll Container -->
-        <div id="scrollContainer" class="scroll-container mx-auto overflow-x-auto p-4 flex justify-start space-x-4">
-            <div class="scroll-item">
+        <div id="scrollContainer" class="scroll-container mx-auto overflow-x-auto whitespace-nowrap p-4 flex space-x-4 scrollbar-hide">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Pyrite">
                 <p class="text-lg mt-2 text-center">PYRITE</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Tourmaline">
                 <p class="text-lg mt-2 text-center">TOURMALINE</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Urlis">
                 <p class="text-lg mt-2 text-center">URLIS</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Aura Cleansing">
                 <p class="text-lg mt-2 text-center">AURA CLEANSING</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Amethyst">
                 <p class="text-lg mt-2 text-center">AMETHYST</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Citrine">
                 <p class="text-lg mt-2 text-center">CITRINE</p>
             </div>
-            <div class="scroll-item">
+            <div class="scroll-item inline-block">
                 <img src="malas.avif" class="w-32 h-32 rounded-full object-cover" alt="Malas">
                 <p class="text-lg mt-2 text-center">MALAS</p>
             </div>
@@ -187,6 +187,63 @@
         <!-- Next Button -->
         <button id="nextBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-300 p-3 rounded-full shadow-md z-10">❯</button>
     </div>
+
+    <script>
+        const scrollContainer = document.getElementById("scrollContainer");
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        scrollContainer.addEventListener("mousedown", (e) => {
+            isDown = true;
+            startX = e.pageX - scrollContainer.offsetLeft;
+            scrollLeft = scrollContainer.scrollLeft;
+        });
+
+        scrollContainer.addEventListener("mouseleave", () => {
+            isDown = false;
+        });
+
+        scrollContainer.addEventListener("mouseup", () => {
+            isDown = false;
+        });
+
+        scrollContainer.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollContainer.offsetLeft;
+            const walk = (x - startX) * 2; // Adjust scroll speed
+            scrollContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch Events for Mobile Scrolling
+        let touchStartX = 0;
+        let touchScrollLeft = 0;
+
+        scrollContainer.addEventListener("touchstart", (e) => {
+            touchStartX = e.touches[0].pageX - scrollContainer.offsetLeft;
+            touchScrollLeft = scrollContainer.scrollLeft;
+        });
+
+        scrollContainer.addEventListener("touchmove", (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].pageX - scrollContainer.offsetLeft;
+            const move = (touchX - touchStartX) * 2;
+            scrollContainer.scrollLeft = touchScrollLeft - move;
+        });
+    </script>
+
+    <style>
+        /* Hide Scrollbar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </body>
 
     
